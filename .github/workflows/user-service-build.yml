@@ -17,7 +17,7 @@ on:
       - ".github/workflows/user-service-build.yml"
 
 env:
-  PROJECT_PATH: 'UserService/UserService.csproj'
+  PROJECT_PATH: 'UserService/UserService/UserService.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
