@@ -12,12 +12,12 @@ namespace MusicService.DTOs
         [Required]
         public string Types { get; set; }
         [Required]
-        public DateTime ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
         [Required]
         public List<SongDTO> Songs { get; set; } = new();
 
-        public List<int> GenreIDs { get; set; } = new();
-        public List<string> Descriptors { get; set; } = new();
-        public List<string> Languages { get; set; } = new();
+        public string GenreIDs { get; set; }
+        public string Descriptors { get; set; } 
+        public string Languages { get; set; } 
     }
 }

@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "..\UserServi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtistService", "..\ArtistService\ArtistService\ArtistService.csproj", "{163814A7-9507-4801-9A8E-95F0AD95FADA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQLibrary", "..\RabbitMQLibrary\RabbitMQLibrary.csproj", "{479BB905-7DE6-4180-B7D0-B029B3915861}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "..\ApiGateway\ApiGateway\ApiGateway.csproj", "{4EB06BF3-FFD9-4397-BA7B-3E6A1C1E3FAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{163814A7-9507-4801-9A8E-95F0AD95FADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{163814A7-9507-4801-9A8E-95F0AD95FADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{163814A7-9507-4801-9A8E-95F0AD95FADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{479BB905-7DE6-4180-B7D0-B029B3915861}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{479BB905-7DE6-4180-B7D0-B029B3915861}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{479BB905-7DE6-4180-B7D0-B029B3915861}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{479BB905-7DE6-4180-B7D0-B029B3915861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB06BF3-FFD9-4397-BA7B-3E6A1C1E3FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB06BF3-FFD9-4397-BA7B-3E6A1C1E3FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB06BF3-FFD9-4397-BA7B-3E6A1C1E3FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB06BF3-FFD9-4397-BA7B-3E6A1C1E3FAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,6 +26,11 @@ namespace MusicService.Repositories
             }
         }
 
+        public Album AddRating(int albumID, int rating)
+        {
+            throw new NotImplementedException();
+        }
+
         public Album GetById(int id)
         {
            return context.MusicRelease.Find(id);

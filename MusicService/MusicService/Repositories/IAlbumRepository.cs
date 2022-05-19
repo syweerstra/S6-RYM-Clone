@@ -4,7 +4,9 @@ namespace MusicService.Repositories
 {
     public interface IAlbumRepository
     {
-        public Album GetById(int id);
-        public bool Add(Album musicRelease);
+        Album GetById(int id);
+        bool Add(Album musicRelease);
+        Album AddRating(int albumID, int rating);
+
     }
 }

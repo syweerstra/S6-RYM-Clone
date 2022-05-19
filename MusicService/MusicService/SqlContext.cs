@@ -8,5 +8,9 @@ namespace MusicService
         public DbSet<Album> MusicRelease { get; set; }
         public DbSet<Song> Song { get; set; }
         public DbSet<Artist> Artist { get; set; }
+
+        public SqlContext(DbContextOptions<SqlContext> options) : base(options)
+        {
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace UserService.Repositories
+﻿using UserService.DTOs;
+
+namespace UserService.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -8,11 +10,20 @@
         {
             this.context = context;
         }    
-        public User GetById(int id)
+        public User GetByName(string name)
         {
-            return context.Users.Find(id);
-
+            return context.Users.Find(name);
         }
+
+        public int GetRating(int albumID, int userID)
+        {
+            var rating = context.Ratings.Where(x => x.AlbumID == albumID && x.UserID == userID).FirstOrDefault();
+            if (rating != null)
+                return rating.RatingOutOfTen;
+            else
+                return 0;
+        }
+
         public bool Rate(Rating rating)
         {
             var existingRating = context.Ratings.Find(rating.AlbumID);

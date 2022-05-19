@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MusicService.DTOs;
 using MusicService.Models;
 using MusicService.Repositories;
+using RabbitMQLibrary;
 
 namespace MusicService.Controllers
 {
@@ -17,12 +18,19 @@ namespace MusicService.Controllers
         {
             _logger = logger;
             repository = repo;
+         //   this.producer = producer;
         }
 
         [HttpGet("{id}")]
         public Album GetById(int id)
         {
             return repository.GetById(id);
+        }
+
+        [HttpPut("edit")]
+        public IActionResult Edit()
+        {
+            return Ok();
         }
 
         [HttpPost]

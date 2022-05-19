@@ -1,4 +1,7 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQLibrary.Models;
+using UserService.DTOs;
 using UserService.Repositories;
 
 namespace UserService.Controllers
@@ -9,26 +12,62 @@ namespace UserService.Controllers
     {
         private readonly IUserRepository repo;
         private readonly ILogger<UserController> _logger;
+        private readonly IPublishEndpoint publishEndpoint;
 
-        public UserController(IUserRepository repo, ILogger<UserController> logger)
+        public UserController(IUserRepository repo, ILogger<UserController> logger, IPublishEndpoint publishEndpoint)
         {
             this.repo = repo;
             _logger = logger;
+            this.publishEndpoint = publishEndpoint;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        [HttpGet("{name}")]
+        public ActionResult<User> Get(string name)
         {
-            if (id > 0)
-                return repo.GetById(id);
+            if (!string.IsNullOrEmpty(name))
+                return repo.GetByName(name);
             else
                 return BadRequest();
         }
+        
+        [HttpGet("rating")]
+        public int GetRating(GetAlbumRatingDTO dto)
+        {
+            return repo.GetRating(dto.AlbumID, dto.UserID);
+        }
 
         [HttpPost("rate")]
-        public IActionResult Rate()
+        public IActionResult Rate(RateDTO dto)
         {
 
+            Rating r = new()
+            {
+                AlbumID = dto.AlbumID,
+                UserID = dto.UserID,
+                ArtistID = dto.ArtistID,
+                Date = DateTime.Now,
+                AlbumCoverImageURL = dto.AlbumCoverImageURL,
+                AlbumName = dto.AlbumName,
+                ArtistName = dto.ArtistName,
+                AlbumReleaseYear = dto.AlbumReleaseYear,
+                RatingOutOfTen = dto.RatingOutOfTen
+            };
+
+            var success = repo.Rate(r);
+            if (success)
+            { 
+                publishEndpoint.Publish(new AlbumRatedMessage() { AlbumID = r.AlbumID, RatingOutOfTen = dto.RatingOutOfTen});
+                return Ok(dto);
+            }
+            else
+                return Problem();
         }
+
+        [HttpDelete("rate")]
+        public IActionResult DeleteRating(DeleteRatingDTO dto)
+        {
+            return null;
+        }
+
     }
 }
