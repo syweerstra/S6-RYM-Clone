@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RabbitMQLibrary\RabbitMQLibrary.csproj" />
+    <Reference Include="RabbitMQLibrary">
+      <HintPath>..\..\RabbitMQLibrary\bin\Debug\net6.0\RabbitMQLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
