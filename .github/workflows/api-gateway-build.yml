@@ -37,6 +37,9 @@ jobs:
 
     - name: 'Build project'
       run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+      
+    - name: 'Test project'
+      run: dotnet test
 
     - name: Setup docker
       uses: docker/setup-buildx-action@v1
