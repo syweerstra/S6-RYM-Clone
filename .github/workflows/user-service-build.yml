@@ -50,6 +50,7 @@ jobs:
     - name: build and push
       uses: docker/build-push-action@v2
       with:
+       context: UserService
        file: UserService/Dockerfile
        push: true
        tags: ${{ secrets.DOCKERHUB_USERNAME }}/rymclone-userservice:latest
