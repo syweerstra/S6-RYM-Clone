@@ -4,7 +4,7 @@ namespace ArtistService.Repositories
 {
     public class MockArtistRepository : IArtistRepository
     {
-        List<Artist> artists = new()
+       static List<Artist> artists = new()
         {
             new Artist()
             {

@@ -12,7 +12,7 @@ namespace MusicService.DTOs
         [Required]
         public string Types { get; set; }
         [Required]
-        public string ReleaseDate { get; set; }
+        public int ReleaseDate { get; set; }
         [Required]
         public List<SongDTO> Songs { get; set; } = new();
 

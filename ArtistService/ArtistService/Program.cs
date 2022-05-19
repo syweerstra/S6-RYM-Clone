@@ -1,3 +1,4 @@
+using ArtistService.Repositories;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,8 @@ builder.Services.AddMassTransit(config =>
         });
     });
 });
+
+builder.Services.AddTransient<IArtistRepository, MockArtistRepository>();
 //builder.Services.AddMassTransit(config =>
 //{
 //    config.UsingRabbitMq((context, config) =>
