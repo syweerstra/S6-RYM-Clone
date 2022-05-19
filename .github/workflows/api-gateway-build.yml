@@ -1,4 +1,4 @@
-name: Build UserService
+name: Build ApiGateway
 
 on:
   push:
@@ -50,6 +50,7 @@ jobs:
     - name: build and push
       uses: docker/build-push-action@v2
       with:
+       context: .
        file: ApiGateway/Dockerfile
        push: true
        tags: ${{ secrets.DOCKERHUB_USERNAME }}/rymclone-gateway:latest
