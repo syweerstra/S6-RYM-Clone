@@ -19,6 +19,7 @@ on:
 env:
   PROJECT_PATH: 'UserService/UserService/UserService.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
   build:
@@ -37,7 +38,20 @@ jobs:
 
     - name: 'Build project'
       run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
-
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+    - name: SonarCloud scan 
+      uses: highbyte/sonarscan-dotnet@v2.1.2
+      with:
+        sonarProjectKey: syweerstra_S6-RYM-Clone
+        sonarProjectName:  S6-RYM-Clone
+        sonarOrganization: sweerstra
+        dotnetBuildArguments: ${{ env.PROJECT_PATH }}
+        dotnetTestArguments: 'UserService.UnitTests'
+  docker:
+    runs-on: ubuntu-latest
+    steps:
     - name: Setup docker
       uses: docker/setup-buildx-action@v1
 
