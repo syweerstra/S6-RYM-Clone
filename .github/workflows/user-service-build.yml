@@ -47,8 +47,8 @@ jobs:
         sonarProjectKey: syweerstra_S6-RYM-Clone
         sonarProjectName:  S6-RYM-Clone
         sonarOrganization: syweerstra
-        dotnetBuildArguments: ${{ env.PROJECT_PATH }}
-        dotnetTestArguments: 'UserService.UnitTests'
+        dotnetBuildArguments: ./UserService/UserService/UserService.csproj
+        dotnetTestArguments: './UserService.UnitTests/UserService.UnitTests.csproj'
   docker:
     runs-on: ubuntu-latest
     steps:
