@@ -51,6 +51,6 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
     # Container build and push to a Azure Container Registry (ACR)
     - run: |
-        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        docker build . -t s6rymcloneregistry.azurecr.io/s6rymclone:${{ github.sha }}
+        docker push s6rymcloneregistry.azurecr.io/s6rymclone:${{ github.sha }}
       working-directory: ./ApiGateway
