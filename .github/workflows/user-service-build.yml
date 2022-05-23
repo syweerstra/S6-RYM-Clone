@@ -20,6 +20,7 @@ env:
   PROJECT_PATH: 'UserService/UserService/UserService.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  F: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
   build:
