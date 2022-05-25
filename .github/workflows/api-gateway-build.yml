@@ -19,7 +19,12 @@ on:
 env:
   PROJECT_PATH: 'ApiGateway/ApiGateway/ApiGateway.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  REGISTRY_NAME: 's6rymcloneregistry'
+  REGISTRY_NAME: 'rymcloneregistry'
+  CLUSTER_NAME: 's6rymcluster'
+  CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
+  NAMESPACE: 's6rymcloneservices'
+  SECRET: 's6rymclonegeheimpje'
+  APP_NAME: 's6RymClone'
 
 jobs:
   build:
@@ -54,3 +59,35 @@ jobs:
         docker build . -t s6rymcloneregistry.azurecr.io/s6rymclone:${{ github.sha }}
         docker push s6rymcloneregistry.azurecr.io/s6rymclone:${{ github.sha }}
       working-directory: ./ApiGateway
+      
+    - uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+    
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
+    
+    # Create image pull secret for ACR
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
+        arguments: --force true
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          ${{ github.workspace }}/manifests/deployment.yaml
+          ${{ github.workspace }}/manifests/service.yaml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        imagepullsecrets: |
+          ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
