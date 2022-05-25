@@ -19,7 +19,13 @@ on:
 env:
   PROJECT_PATH: 'ApiGateway/ApiGateway/ApiGateway.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+  REGISTRY_NAME: 'rymcloneregistry'
+  CLUSTER_NAME: 's6rymcluster'
+  CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
+  NAMESPACE: 's6rymcloneservices'
+  SECRET: 's6rymclonegeheimpje'
+  APP_NAME: 's6RymClone'
+# ff
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,20 +43,51 @@ jobs:
 
     - name: 'Build project'
       run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+      
+    - name: 'Test project'
+      run: dotnet test
 
-    - name: Setup docker
-      uses: docker/setup-buildx-action@v1
-
-    - name: login to dockerhub
-      uses: docker/login-action@v1
+    
+    - name: 'Azure container login'
+      uses: azure/docker-login@v1
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-    - name: build and push
-      uses: docker/build-push-action@v2
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    # Container build and push to a Azure Container Registry (ACR)
+    - run: |
+        docker build . -t rymcloneregistry.azurecr.io/s6rymclone:${{ github.sha }}
+        docker push rymcloneregistry.azurecr.io/s6rymclone:${{ github.sha }}
+      working-directory: ./ApiGateway
+      
+    - uses: azure/aks-set-context@v1
       with:
-       context: ApiGateway
-       file: ApiGateway/Dockerfile
-       push: true
-       tags: ${{ secrets.DOCKERHUB_USERNAME }}/rymclone-gateway:latest
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+    
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
+    
+    # Create image pull secret for ACR
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
+        arguments: --force true
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          ${{ github.workspace }}/manifests/deployment.yaml
+          ${{ github.workspace }}/manifests/service.yaml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        imagepullsecrets: |
+          ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
