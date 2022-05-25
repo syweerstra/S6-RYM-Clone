@@ -25,7 +25,7 @@ env:
   NAMESPACE: 's6rymcloneservices'
   SECRET: 's6rymclonegeheimpje'
   APP_NAME: 's6RymClone'
-# ff
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -84,8 +84,8 @@ jobs:
     - uses: azure/k8s-deploy@v1
       with:
         manifests: |
-          manifests/deployment.yaml
-          manifests/service.yaml
+          ./manifests/deployment.yml
+          ./manifests/service.yml
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         imagepullsecrets: |
