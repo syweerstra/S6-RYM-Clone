@@ -38,6 +38,8 @@ namespace MusicService.Repositories
         public bool Add(Album musicRelease)
         {
             throw new NotImplementedException();
+            _albums.Add(musicRelease);
+            return true;
         }
 
         public Album GetById(int id)

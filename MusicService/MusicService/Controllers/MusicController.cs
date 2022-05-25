@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MusicService.Data;
 using MusicService.DTOs;
 using MusicService.Models;
 using MusicService.Repositories;
@@ -13,12 +14,14 @@ namespace MusicService.Controllers
 
         private readonly ILogger<MusicController> _logger;
         private readonly IAlbumRepository repository;
+        private readonly IImageStorage imageStorage;
 
-        public MusicController(ILogger<MusicController> logger, IAlbumRepository repo)
+        public MusicController(ILogger<MusicController> logger, IAlbumRepository repo, IImageStorage imageStorage)
         {
             _logger = logger;
             repository = repo;
-         //   this.producer = producer;
+            this.imageStorage = imageStorage;
+            //   this.producer = producer;
         }
 
         [HttpGet("{id}")]
@@ -34,7 +37,7 @@ namespace MusicService.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddMusicDTO dto)
+        public IActionResult Add([FromForm] AddMusicDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -50,13 +53,18 @@ namespace MusicService.Controllers
                 });
             }
 
+            var imageUrl = imageStorage.UploadImage(57, dto.AlbumCoverImage);
+
             var album = new Album()
             {
                 Name = dto.Name,
-                Artist = new Artist() {Id = dto.ArtistID },
+                Artist = new Artist() { Id = dto.ArtistID },
+                AlbumCoverImageURL = imageUrl,
                 ReleaseDate = dto.ReleaseDate,
                 Types = dto.Types,
-                Songs = songs
+                Songs = songs,
+                Descriptors = dto.Descriptors,
+                Languages = dto.Languages
             };
 
             repository.Add(album);

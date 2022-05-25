@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RabbitMQLibrary;
 using MusicService.Repositories;
 using MassTransit;
+using MusicService.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<SqlContext>(options =>
 });
 
 builder.Services.AddTransient<IAlbumRepository, MockAlbumRepository>();
+builder.Services.AddTransient<IImageStorage, AzureBlobStorage>();
 
 builder.Services.AddCors(options =>
 {
@@ -32,6 +34,7 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod();
         });
 });
+
 
 builder.Services.AddMassTransit(config =>
 {
