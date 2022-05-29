@@ -24,7 +24,7 @@ env:
   CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
   NAMESPACE: 's6rymcloneservice'
 #   SECRET: 's6rymclonegeheimpje'
-  APP_NAME: 's6RymClone'
+  APP_NAME: 's6rymclone'
 
 jobs:
   build:
