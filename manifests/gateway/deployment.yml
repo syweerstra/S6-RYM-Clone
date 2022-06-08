@@ -1,19 +1,19 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: s6rymclone
+  name: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: s6rymclone
+      app: gateway
   template:
     metadata:
       labels:
-        app: s6rymclone
+        app: gateway
     spec:
       containers:
         - name: s6rymclone
-          image: rymcloneregistry.azurecr.io/s6rymclone
+          image: rymcloneregistry.azurecr.io/gateway
           ports:
           - containerPort: 80
