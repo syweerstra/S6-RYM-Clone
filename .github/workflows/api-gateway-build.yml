@@ -15,7 +15,7 @@ on:
     paths:
       - "ApiGateway/**"
       - ".github/workflows/api-gateway-build.yml"
-
+# ff
 env:
   PROJECT_PATH: 'ApiGateway/ApiGateway/ApiGateway.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -75,7 +75,7 @@ jobs:
       with:
         container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }} 
         secret-name: ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
         arguments: --force true
