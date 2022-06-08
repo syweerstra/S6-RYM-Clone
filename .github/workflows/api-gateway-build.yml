@@ -24,7 +24,7 @@ env:
   CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
   NAMESPACE: 's6rymcloneservices'
   SECRET: 's6rymclonegeheimpje'
-  APP_NAME: 's6RymClone'
+  APP_NAME: 'gateway'
 
 jobs:
   build:
@@ -84,8 +84,8 @@ jobs:
     - uses: azure/k8s-deploy@v1
       with:
         manifests: |
-          ./manifests/deployment.yml
-          ./manifests/service.yml
+          ./manifests/gateway/deployment.yml
+          ./manifests/gateway/service.yml
         images: |
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         imagepullsecrets: |
