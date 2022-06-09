@@ -5,6 +5,7 @@
       "DownstreamPathTemplate": "/user/{everything}",
       "DownstreamScheme": "https",
       "ServiceName": "userservice",
+      "ServiceNamespace": "s6rymcloneservices",
       "UpstreamPathTemplate": "/api/user/{everything}",
       "Key": "UserDownroute",
       "Priority": 0
@@ -18,6 +19,7 @@
       "DownstreamPathTemplate": "/user/rate",
       "DownstreamScheme": "https",
       "ServiceName": "userservice",
+      "ServiceNamespace": "s6rymcloneservices",
       "UpstreamPathTemplate": "/api/user/rate",
       "Key": "UserDownroute",
       "AuthenticationOptions": {
@@ -77,10 +79,12 @@
       "Key": "AuthDownroute"
     }
   ],
-    "GlobalConfiguration": {
-      "ServiceDiscoveryProvider": {
-        "Namespace": "s6rymcloneservices",
-        "Type": "KubernetesServiceDiscoveryProvider"
-      }
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "192.168.0.13",
+      "Port": 443,
+      "Token": "txpc696iUhbVoudg164r93CxDTrKRVWG",
+      "Type": "kube"
     }
   }
+}
