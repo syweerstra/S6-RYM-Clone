@@ -33,6 +33,19 @@ jobs:
     steps:
     - name: 'Checkout'
       uses: actions/checkout@v2
+      
+    - name: 'Azure container login'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    # Container build and push to a Azure Container Registry (ACR)
+    #CHANGE {GATEWAY} PER SERVICE
+    - run: |
+        docker build . -t rymcloneregistry.azurecr.io/userservice:${{ github.sha }} -f Dockerfile.UserService
+        docker push rymcloneregistry.azurecr.io/userservice:${{ github.sha }}
+      working-directory: ./
 
     - name: 'Install dotnet'
       uses: actions/setup-dotnet@v1
@@ -63,9 +76,9 @@ jobs:
     # Container build and push to a Azure Container Registry (ACR)
     #CHANGE {GATEWAY} PER SERVICE
     - run: |
-        docker build . -t rymcloneregistry.azurecr.io/userservice:${{ github.sha }}
+        docker build . -t rymcloneregistry.azurecr.io/userservice:${{ github.sha }} -f Dockerfile.UserService
         docker push rymcloneregistry.azurecr.io/userservice:${{ github.sha }}
-      working-directory: ./UserService
+      working-directory: ./
       
     - uses: azure/aks-set-context@v1
       with:
