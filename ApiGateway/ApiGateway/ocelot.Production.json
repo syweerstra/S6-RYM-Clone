@@ -1,0 +1,98 @@
+{
+  "Routes": [
+    //UserService
+    {
+      "DownstreamPathTemplate": "/user/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7100
+        }
+      ],
+      "UpstreamPathTemplate": "/api/user/{everything}",
+      "Key": "UserDownroute",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      },
+      "Priority": 0
+      //"AddHeadersToRequest": {
+      //  "Username": "Claims[Username] > value[0]"
+      //}
+      // "UpstreamHttpMethod": [ "Get" ]
+    },
+
+
+    {
+      "DownstreamPathTemplate": "/user/rate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7100
+        }
+      ],
+      "UpstreamPathTemplate": "/api/user/rate",
+      "Key": "UserDownroute",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      },
+      "UpstreamHttpMethod": [ "Post" ],
+      "AddQueriesToRequest": {
+        "UserID": "Claims[userId] > value[0]"
+      },
+      "AddHeadersToRequest": {
+        "UserID": "Claims[userId] > value[0]",
+        "Username": "Claims[Username] > value[0]"
+      },
+      "Priority": 1
+    },
+
+    //MusicService
+    {
+      "DownstreamPathTemplate": "/music/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7200
+        }
+      ],
+      "UpstreamPathTemplate": "/api/music/{everything}",
+      "Key": "AlbumDownroute"
+      // "UpstreamHttpMethod": [ "Get" ]
+    },
+    //ArtistService
+    {
+      "DownstreamPathTemplate": "/artist/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7300
+        }
+      ],
+      "UpstreamPathTemplate": "/api/artist/{everything}",
+      "Key": "ArtistDownroute"
+      // "UpstreamHttpMethod": [ "Get" ]
+    },
+    //AuthService
+    {
+      "DownstreamPathTemplate": "/auth/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 11000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "Key": "AuthDownroute"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7000"
+  }
+}
