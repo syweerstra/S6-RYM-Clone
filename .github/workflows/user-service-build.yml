@@ -17,10 +17,15 @@ on:
       - ".github/workflows/user-service-build.yml"
 
 env:
-  PROJECT_PATH: 'UserService/UserService/UserService.csproj'
+  PROJECT_PATH: 'UserService/UserService.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  F: ${{ secrets.SONAR_TOKEN }}
+  REGISTRY_NAME: 'rymcloneregistry'
+  CLUSTER_NAME: 's6rymcluster'
+  CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
+  NAMESPACE: 's6rymcloneservices'
+  SECRET: 's6rymclonegeheimpje'
+  APP_NAME: 'userservice'
 
 jobs:
   build:
@@ -28,6 +33,19 @@ jobs:
     steps:
     - name: 'Checkout'
       uses: actions/checkout@v2
+      
+    - name: 'Azure container login'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    # Container build and push to a Azure Container Registry (ACR)
+    #CHANGE {GATEWAY} PER SERVICE
+    - run: |
+        docker build . -t rymcloneregistry.azurecr.io/userservice:${{ github.sha }} -f Dockerfile.UserService
+        docker push rymcloneregistry.azurecr.io/userservice:${{ github.sha }}
+      working-directory: ./
 
     - name: 'Install dotnet'
       uses: actions/setup-dotnet@v1
@@ -46,22 +64,50 @@ jobs:
         sonarProjectKey: syweerstra_S6-RYM-Clone
         sonarProjectName:  S6-RYM-Clone
         sonarOrganization: syweerstra
-        dotnetBuildArguments: './UserService/UserService/UserService.csproj'
+        dotnetBuildArguments: './UserService/UserService.csproj'
         dotnetTestArguments: './UserService.UnitTests/UserService.UnitTests.csproj'
 
-    - name: Setup docker
-      uses: docker/setup-buildx-action@v1
-
-    - name: login to dockerhub
-      uses: docker/login-action@v1
+    - name: 'Azure container login'
+      uses: azure/docker-login@v1
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-    - name: build and push
-      uses: docker/build-push-action@v2
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    # Container build and push to a Azure Container Registry (ACR)
+    #CHANGE {GATEWAY} PER SERVICE
+    - run: |
+        docker build . -t rymcloneregistry.azurecr.io/userservice:${{ github.sha }} -f Dockerfile.UserService
+        docker push rymcloneregistry.azurecr.io/userservice:${{ github.sha }}
+      working-directory: ./
+      
+    - uses: azure/aks-set-context@v1
       with:
-       context: UserService
-       file: UserService/Dockerfile
-       push: true
-       tags: ${{ secrets.DOCKERHUB_USERNAME }}/rymclone-userservice:latest
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+    
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run=client -o json | kubectl apply -f -
+    
+    # Create image pull secret for ACR
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }} 
+        secret-name: ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
+        arguments: --force true
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          ./manifests/userservice/deployment.yml
+          ./manifests/userservice/service.yml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        imagepullsecrets: |
+          ${{ env.SECRET }}
+        namespace: ${{ env.NAMESPACE }}
