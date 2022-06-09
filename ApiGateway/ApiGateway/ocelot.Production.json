@@ -81,9 +81,6 @@
   ],
   "GlobalConfiguration": {
     "ServiceDiscoveryProvider": {
-      "Host": "192.168.0.13",
-      "Port": 443,
-      "Token": "txpc696iUhbVoudg164r93CxDTrKRVWG",
       "Type": "kube"
     }
   }
