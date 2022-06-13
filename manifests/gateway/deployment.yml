@@ -16,4 +16,4 @@ spec:
         - name: s6rymclone
           image: rymcloneregistry.azurecr.io/gateway
           ports:
-          - containerPort: 7000
+          - containerPort: 80

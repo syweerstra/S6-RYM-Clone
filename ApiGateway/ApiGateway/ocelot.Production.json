@@ -85,7 +85,7 @@
   ],
   "GlobalConfiguration": {
     "GlobalConfiguration": {
-      "BaseUrl": "http://localhost:7000"
+      "BaseUrl": "http://localhost:80"
     }
   }
 }
