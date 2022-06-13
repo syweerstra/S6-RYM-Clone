@@ -39,6 +39,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddMassTransit(config =>
 {
     config.AddConsumer<RatingConsumer>();
+    config.AddConsumer<UserDeletedConsumer>();
 
     config.UsingRabbitMq((context, config) =>
     {
@@ -47,6 +48,10 @@ builder.Services.AddMassTransit(config =>
         config.ReceiveEndpoint("rating-queue", c =>
         {
             c.ConfigureConsumer<RatingConsumer>(context);
+        });
+        config.ReceiveEndpoint("delete-rating-queue", c =>
+        {
+            c.ConfigureConsumer<UserDeletedConsumer>(context);
         });
     });
 });

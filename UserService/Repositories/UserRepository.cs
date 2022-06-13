@@ -9,7 +9,18 @@ namespace UserService.Repositories
         public UserRepository(SqlContext context)
         {
             this.context = context;
-        }    
+        }
+
+        public User DeleteUser(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetByID(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public User GetByName(string name)
         {
             return context.Users.Find(name);

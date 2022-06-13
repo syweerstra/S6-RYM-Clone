@@ -30,8 +30,30 @@ namespace UserService.Controllers
             else
                 return BadRequest();
         }
-        
-        [HttpGet("rating")]
+
+        [HttpDelete("deleteUser")]
+        public IActionResult DeleteUser()
+        {
+            bool parseSuccess = Guid.TryParse(HttpContext.Request.Headers["userId"], out Guid userID);
+
+            if (parseSuccess)
+            {
+                User deletedUser = repo.DeleteUser(userID);
+
+                publishEndpoint.Publish
+                (
+                    new UserDeletedMessage
+                    (
+                        userID,
+                        deletedUser.Ratings.Select(r => r.AlbumID).ToList()
+                    )
+                );
+                return Ok();
+            }
+            else return BadRequest();
+        }
+
+        [HttpPost("rating")]
         public int GetRating(GetAlbumRatingDTO dto)
         {
             return repo.GetRating(dto.AlbumID, dto.UserID);
@@ -41,7 +63,7 @@ namespace UserService.Controllers
         public IActionResult Rate(RateDTO dto)
         {
            var userId = Guid.Parse(HttpContext.Request.Headers["userId"]);
-           var usaName = Guid.Parse(HttpContext.Request.Headers["Username"]);
+          // var usaName = HttpContext.Request.Headers["Username"];
 
             Rating r = new()
             {
@@ -59,7 +81,7 @@ namespace UserService.Controllers
             var success = repo.Rate(r);
             if (success)
             { 
-                publishEndpoint.Publish(new AlbumRatedMessage() { AlbumID = r.AlbumID, RatingOutOfTen = dto.RatingOutOfTen});
+                publishEndpoint.Publish(new AlbumRatedMessage() { UserID = userId, AlbumID = r.AlbumID, RatingOutOfTen = dto.RatingOutOfTen});
                 return Ok(dto);
             }
             else

@@ -11,7 +11,7 @@ namespace MusicService.Models
         public int ReleaseDate { get; set; }
         public double AverageRating { get; set; }
         public int AmountOfRatings { get; set; }
-        public List<double> Ratings { get; set; } = new();
+        public Dictionary<Guid, double> Ratings { get; set; } = new();
         public string Genres { get; set; } 
         public List<Song> Songs { get; set; } = new();
         public string Descriptors { get; set; } 

@@ -52,13 +52,29 @@ namespace MusicService.Repositories
             
         }
 
-        public Album AddRating(int albumID, int rating)
+        public Album AddRating(Guid userID, int albumID, int rating)
         {
             var album = _albums.Where(x => x.ID == albumID).FirstOrDefault();
-            album.Ratings.Add(rating);
-            album.AverageRating = RatingCalculations.CalculateAverage(album.Ratings);
+            album.Ratings.Add(userID, rating);
+            album.AverageRating = RatingCalculations.CalculateAverage(album.Ratings.Values.ToList());
             album.AmountOfRatings++;
             return album;
+        }
+
+        public bool DeleteRating(int albumID, Guid userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteAllRatings(List<int> albumIDs, Guid userID)
+        {
+            var albums = _albums.Where(a => albumIDs.Contains(a.ID)).ToList();
+            foreach (var album in albums)
+            {
+                album.Ratings.Remove(userID);
+            }
+
+            return true;
         }
     }
 }

@@ -16,7 +16,7 @@ internal class RatingConsumer : IConsumer<AlbumRatedMessage>
 
     public Task Consume(ConsumeContext<AlbumRatedMessage> context)
     {
-        var album = repo.AddRating(context.Message.AlbumID, context.Message.RatingOutOfTen);
+        var album = repo.AddRating(context.Message.UserID, context.Message.AlbumID, context.Message.RatingOutOfTen);
         publishEndpoint.Publish(new AlbumChangedMessage()
         {
             ID = album.ID,

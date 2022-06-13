@@ -26,7 +26,17 @@ namespace MusicService.Repositories
             }
         }
 
-        public Album AddRating(int albumID, int rating)
+        public Album AddRating(Guid userID, int albumID, int rating)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteAllRatings(List<int> albumIDs, Guid userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteRating(int albumID, Guid userID)
         {
             throw new NotImplementedException();
         }

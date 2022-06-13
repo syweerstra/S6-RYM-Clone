@@ -2,6 +2,7 @@ using AuthService;
 using AuthService.Data;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +20,26 @@ builder.Services.AddSingleton<SqlContext>();
 
 
 // For Identity
+builder.Services.AddMassTransit(config =>
+{
+    config.AddConsumer<DeleteUserConsumer>();
+    config.UsingRabbitMq((context, config) =>
+    {
+        //config.Host("amqp://guest:guest@172.17.0.2:5672");
+        config.Host("amqp://guest:guest@localhost:5672");
+        //config.Host("amqp://guest:guest@rabbitmq");
 
+        //config.Host("haroldjcastillo:5672", "/", h =>
+        //{
+        //    h.Username("guest");
+        //    h.Password("guest");
+        //});
+        config.ReceiveEndpoint("delete-user-queue", c =>
+        {
+            c.ConfigureConsumer<DeleteUserConsumer>(context);
+        });
+    });
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {

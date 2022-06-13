@@ -2,26 +2,40 @@
 {
     public class MockUserRepository : IUserRepository
     {
-        static User user = new User()
+        List<User> users = new()
         {
-            Name = "Syweer",
-            Age = 20,
-            Gender = "Male",
-            Ratings = new()
+            new User()
             {
-                
+                Id = new Guid("2fdd793a-c35f-40d0-9ea1-36d4c15187cd"),
+                Name = "Syweer",
+                Age = 20,
+                Gender = "Male",
+                Ratings = new()
             }
-        };
 
+        };
       
         public User GetByName(string name)
         {
-            return user;
+            return users.FirstOrDefault();
         }
 
+        public User DeleteUser(Guid userId)
+        {
+            User userDeleted = users.Where(x => x.Id == userId).FirstOrDefault();
+            //User user = new User()
+            //{
+            //    Id = userDeleted.Id,
+            //    Ratings = userDeleted.Ratings.ToList()
+            //};
+            userDeleted.Ratings = new(userDeleted.Ratings);
+            users.Remove(userDeleted);
+
+            return userDeleted;
+        }
         public int GetRating(int albumID, Guid userID)
         {
-            var rating = user.Ratings.Where(x => x.AlbumID == albumID).FirstOrDefault();
+            var rating = users.FirstOrDefault().Ratings.Where(x => x.AlbumID == albumID).FirstOrDefault();
             if (rating != null)
                 return rating.RatingOutOfTen;
             else
@@ -30,13 +44,18 @@
 
         public bool Rate(Rating rating)
         {
-            var r = user.Ratings.Where(x => x.AlbumID == rating.AlbumID).FirstOrDefault();
+            var r = users.FirstOrDefault().Ratings.Where(x => x.AlbumID == rating.AlbumID).FirstOrDefault();
             if(r == null)
-                user.Ratings.Add(rating);
+                users.FirstOrDefault().Ratings.Add(rating);
             else
                 r.RatingOutOfTen = rating.RatingOutOfTen;
 
             return true;
+        }
+
+        public User GetByID(Guid id)
+        {
+            return users.Where(u => u.Id == id).FirstOrDefault();
         }
     }
 }
