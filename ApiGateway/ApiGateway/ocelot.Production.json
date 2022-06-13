@@ -4,12 +4,7 @@
     {
       "DownstreamPathTemplate": "/user/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "userservice-service",
-          "Port": 80
-        }
-      ], 
+      "ServiceName": "userservice",
       "UpstreamPathTemplate": "/api/user/{everything}",
       "Key": "UserDownroute",
       "Priority": 0
@@ -85,7 +80,11 @@
   ],
   "GlobalConfiguration": {
     "GlobalConfiguration": {
-      "BaseUrl": "http://localhost:80"
+      "ServiceDiscoveryProvider": {
+        "Port": 80,
+        "Namespace": "s6rymcloneservices",
+        "Type": "kube"
+      }
     }
   }
 }
