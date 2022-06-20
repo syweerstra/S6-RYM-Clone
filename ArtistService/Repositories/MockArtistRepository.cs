@@ -66,6 +66,23 @@ namespace ArtistService.Repositories
             
         }
 
+        public void DeleteUser(List<int> albumIds)
+        {
+            //Horribly inefficient
+            foreach (var artist in artists)
+            {
+                foreach (var album in artist.Albums)
+                {
+                    if (albumIds.Contains(album.ID))
+                    {
+                        album.AmountOfRatings--;
+                        album.AverageRating = 0; //Not good
+                    }
+                    
+                }
+            }
+        }
+
         public Artist GetByID(int id)
         {
             return artists.FirstOrDefault();

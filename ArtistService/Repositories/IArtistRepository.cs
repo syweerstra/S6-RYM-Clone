@@ -6,5 +6,7 @@ namespace ArtistService.Repositories
     {
         Artist GetByID(int id);
         void EditAlbum(int artistID, Album newVersionAlbum);
+        void DeleteUser(List<int> albumIds);
+
     }
 }

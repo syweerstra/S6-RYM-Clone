@@ -43,7 +43,13 @@ builder.Services.AddMassTransit(config =>
 
     config.UsingRabbitMq((context, config) =>
     {
-        config.Host("amqp://guest:guest@localhost:5672");
+        //config.Host("amqp://guest:guest@localhost:5672");
+
+        config.Host("rabbitmq-service", 5672, "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
 
         config.ReceiveEndpoint("rating-queue", c =>
         {

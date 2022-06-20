@@ -1,0 +1,21 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: artistservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artistservice
+  template:
+    metadata:
+      labels:
+        app: artistservice
+    spec:
+      containers:
+        - name: artistservice
+          image: rymcloneregistry.azurecr.io/artistservice
+          ports:
+          - containerPort: 80
+      imagePullSecrets:
+        - name: s6rymclonegeheimpje

@@ -26,14 +26,14 @@ builder.Services.AddMassTransit(config =>
     config.UsingRabbitMq((context, config) =>
     {
         //config.Host("amqp://guest:guest@172.17.0.2:5672");
-        config.Host("amqp://guest:guest@localhost:5672");
+        //config.Host("amqp://guest:guest@localhost:5672");
         //config.Host("amqp://guest:guest@rabbitmq");
 
-        //config.Host("haroldjcastillo:5672", "/", h =>
-        //{
-        //    h.Username("guest");
-        //    h.Password("guest");
-        //});
+        config.Host("rabbitmq-service", 5672, "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
         config.ReceiveEndpoint("delete-user-queue", c =>
         {
             c.ConfigureConsumer<DeleteUserConsumer>(context);

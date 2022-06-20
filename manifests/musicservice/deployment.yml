@@ -1,0 +1,21 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: musicservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: musicservice
+  template:
+    metadata:
+      labels:
+        app: musicservice
+    spec:
+      containers:
+        - name: musicservice
+          image: rymcloneregistry.azurecr.io/musicservice
+          ports:
+          - containerPort: 80
+      imagePullSecrets:
+        - name: s6rymclonegeheimpje

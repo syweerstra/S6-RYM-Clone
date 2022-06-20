@@ -1,3 +1,4 @@
+using ArtistService;
 using ArtistService.Repositories;
 using MassTransit;
 
@@ -24,14 +25,26 @@ builder.Services.AddCors(options =>
 builder.Services.AddMassTransit(config =>
 {
     config.AddConsumer<AlbumConsumer>();
+    config.AddConsumer<UserDeletedConsumer>();
+
 
     config.UsingRabbitMq((context, config) =>
     {
-        config.Host("amqp://guest:guest@localhost:5672");
+        //config.Host("amqp://guest:guest@localhost:5672");
+
+        config.Host("rabbitmq-service", 5672, "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
 
         config.ReceiveEndpoint("album-queue", c =>
         {
             c.ConfigureConsumer<AlbumConsumer>(context);
+        });
+        config.ReceiveEndpoint("user-deleted-artist-queue", c =>
+        {
+            c.ConfigureConsumer<UserDeletedConsumer>(context);
         });
     });
 });
