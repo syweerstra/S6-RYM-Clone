@@ -32,7 +32,8 @@ builder.Services.AddMassTransit(config =>
     config.AddConsumer<UserCreatedConsumer>();
     config.UsingRabbitMq((context, config) =>
     {
-        config.Host("amqp://guest:guest@localhost:5672");
+       // config.Host("amqp://guest:guest@localhost:5672");
+        config.Host("rabbitmq-service:5672");
         //config.Host("amqp://guest:guest@rabbitmq");
 
         //config.Host("haroldjcastillo:5672", "/", h =>
