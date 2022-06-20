@@ -14,6 +14,7 @@ namespace RabbitMQLibrary.Models
         public UserDeletedMessage(Guid userID, List<int> albumsRatedIDs)
         {
             UserID = userID;
+            AlbumsRatedIDs = albumsRatedIDs;
         }
     }
 }

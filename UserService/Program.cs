@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using UserService;
 using UserService.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddMassTransit(config =>
 {
+    config.AddConsumer<UserCreatedConsumer>();
     config.UsingRabbitMq((context, config) =>
     {
         config.Host("amqp://guest:guest@localhost:5672");
@@ -38,6 +40,11 @@ builder.Services.AddMassTransit(config =>
         //    h.Username("guest");
         //    h.Password("guest");
         //});
+
+        config.ReceiveEndpoint("user-created-queue", c =>
+        {
+            c.ConfigureConsumer<UserCreatedConsumer>(context);
+        });
     });
 });
 

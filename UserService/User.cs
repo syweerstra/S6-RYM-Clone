@@ -8,6 +8,6 @@ namespace UserService
         public int Age { get; set; }
         public string Gender { get; set; }
         public string? Website { get; set; }
-        public List<Rating> Ratings { get; set; }
+        public List<Rating> Ratings { get; set; } = new();
     }
 }

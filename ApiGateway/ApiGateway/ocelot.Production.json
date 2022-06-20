@@ -4,7 +4,12 @@
     {
       "DownstreamPathTemplate": "/user/{everything}",
       "DownstreamScheme": "http",
-      "ServiceName": "userservice",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/user/{everything}",
       "Key": "UserDownroute",
       "Priority": 0
@@ -17,8 +22,12 @@
     {
       "DownstreamPathTemplate": "/user/rate",
       "DownstreamScheme": "https",
-      "ServiceName": "userservice",
-      "ServiceNamespace": "s6rymcloneservices",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/user/rate",
       "Key": "UserDownroute",
       "AuthenticationOptions": {
@@ -79,12 +88,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "GlobalConfiguration": {
-      "ServiceDiscoveryProvider": {
-        "Port": 80,
-        "Namespace": "s6rymcloneservices",
-        "Type": "kube"
-      }
-    }
+      "BaseUrl": "https://localhost:5000"
   }
 }

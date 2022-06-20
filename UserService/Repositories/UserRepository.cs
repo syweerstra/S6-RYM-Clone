@@ -11,6 +11,11 @@ namespace UserService.Repositories
             this.context = context;
         }
 
+        public User CreateUser(Guid userId, string username)
+        {
+            throw new NotImplementedException();
+        }
+
         public User DeleteUser(Guid userId)
         {
             throw new NotImplementedException();

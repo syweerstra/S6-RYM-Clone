@@ -4,7 +4,10 @@
     {
         public static double CalculateAverage(List<double> ratings)
         {
-            return ratings.Average();
+            if (ratings.Count == 0)
+                return 0;
+            else
+                return ratings.Average();
         }
     }
 }

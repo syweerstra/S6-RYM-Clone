@@ -72,6 +72,8 @@ namespace MusicService.Repositories
             foreach (var album in albums)
             {
                 album.Ratings.Remove(userID);
+                album.AmountOfRatings--;
+                album.AverageRating = RatingCalculations.CalculateAverage(album.Ratings.Values.ToList());
             }
 
             return true;

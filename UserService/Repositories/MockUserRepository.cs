@@ -2,7 +2,7 @@
 {
     public class MockUserRepository : IUserRepository
     {
-        List<User> users = new()
+        static List<User> users = new()
         {
             new User()
             {
@@ -17,7 +17,7 @@
       
         public User GetByName(string name)
         {
-            return users.FirstOrDefault();
+            return users.Where(x => x.Name.ToUpper() == name.ToUpper()).FirstOrDefault();
         }
 
         public User DeleteUser(Guid userId)
@@ -35,7 +35,11 @@
         }
         public int GetRating(int albumID, Guid userID)
         {
-            var rating = users.FirstOrDefault().Ratings.Where(x => x.AlbumID == albumID).FirstOrDefault();
+            var user = users.Where(x => x.Id == userID).FirstOrDefault();
+            Rating rating = null;
+            if (user != null)
+                 user.Ratings.Where(x => x.AlbumID == albumID).FirstOrDefault();
+
             if (rating != null)
                 return rating.RatingOutOfTen;
             else
@@ -44,9 +48,9 @@
 
         public bool Rate(Rating rating)
         {
-            var r = users.FirstOrDefault().Ratings.Where(x => x.AlbumID == rating.AlbumID).FirstOrDefault();
+            var r = users.Where(x => x.Id == rating.UserID).FirstOrDefault().Ratings.Where(x => x.AlbumID == rating.AlbumID).FirstOrDefault();
             if(r == null)
-                users.FirstOrDefault().Ratings.Add(rating);
+                users.Where(x => x.Id == rating.UserID).FirstOrDefault().Ratings.Add(rating);
             else
                 r.RatingOutOfTen = rating.RatingOutOfTen;
 
@@ -56,6 +60,12 @@
         public User GetByID(Guid id)
         {
             return users.Where(u => u.Id == id).FirstOrDefault();
+        }
+
+        public User CreateUser(Guid userId, string username)
+        {
+            users.Add(new User() { Id = userId, Name = username, UserImageUrl = "https://e.snmc.io/i/600/w/d465f34f719feaa0793e1a17c7841f12/7689996" });
+            return users.Last();
         }
     }
 }
