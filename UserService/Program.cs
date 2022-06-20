@@ -36,7 +36,7 @@ builder.Services.AddMassTransit(config =>
         //config.Host("ampq://guest:guest@rabbitmq-service:5672");
         ////config.Host("amqp://guest:guest@rabbitmq");
 
-        config.Host("rabbitmq-service:5672", "/", h =>
+        config.Host("rabbitmq-service", 5672, "/", h =>
         {
             h.Username("guest");
             h.Password("guest");
