@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "..\ApiGateway
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.UnitTests", "..\UserService.UnitTests\UserService.UnitTests.csproj", "{9619E8CB-C348-4F7A-B041-0924B5FEF842}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "..\AuthService\AuthService.csproj", "{971E38FE-6C62-44D4-9086-6028E49F95A7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "..\UserService\UserService.csproj", "{9FB036B8-5A02-4E23-BE3A-42B31336251F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicService", "..\MusicService\MusicService.csproj", "{991AEF2D-4743-4102-9446-7DCF710D4B67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtistService", "..\ArtistService\ArtistService.csproj", "{528292BB-0B80-4561-8E35-8559B9DA7C30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "..\AuthService\AuthService.csproj", "{1CBFF90A-9DB1-4211-B2EC-35D13BF66C1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,6 @@ Global
 		{9619E8CB-C348-4F7A-B041-0924B5FEF842}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9619E8CB-C348-4F7A-B041-0924B5FEF842}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9619E8CB-C348-4F7A-B041-0924B5FEF842}.Release|Any CPU.Build.0 = Release|Any CPU
-		{971E38FE-6C62-44D4-9086-6028E49F95A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{971E38FE-6C62-44D4-9086-6028E49F95A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{971E38FE-6C62-44D4-9086-6028E49F95A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{971E38FE-6C62-44D4-9086-6028E49F95A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FB036B8-5A02-4E23-BE3A-42B31336251F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FB036B8-5A02-4E23-BE3A-42B31336251F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FB036B8-5A02-4E23-BE3A-42B31336251F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{528292BB-0B80-4561-8E35-8559B9DA7C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{528292BB-0B80-4561-8E35-8559B9DA7C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{528292BB-0B80-4561-8E35-8559B9DA7C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CBFF90A-9DB1-4211-B2EC-35D13BF66C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CBFF90A-9DB1-4211-B2EC-35D13BF66C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CBFF90A-9DB1-4211-B2EC-35D13BF66C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CBFF90A-9DB1-4211-B2EC-35D13BF66C1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
