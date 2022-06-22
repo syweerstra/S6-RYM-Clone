@@ -12,7 +12,6 @@
       ],
       "UpstreamPathTemplate": "/api/user/{everything}",
       "Key": "UserDownroute",
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "Priority": 0
       //"AddHeadersToRequest": {
       //  "Username": "Claims[Username] > value[0]"
@@ -31,7 +30,6 @@
       ],
       "UpstreamPathTemplate": "/api/user/rate",
       "Key": "UserDownroute",
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
@@ -58,8 +56,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/music/{everything}",
-      "Key": "AlbumDownroute",
-      "DangerousAcceptAnyServerCertificateValidator": true
+      "Key": "AlbumDownroute"
       // "UpstreamHttpMethod": [ "Get" ]
     },
     //ArtistService
@@ -73,8 +70,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/artist/{everything}",
-      "Key": "ArtistDownroute",
-      "DangerousAcceptAnyServerCertificateValidator": true
+      "Key": "ArtistDownroute"
       // "UpstreamHttpMethod": [ "Get" ]
     },
     //AuthService
@@ -88,8 +84,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/auth/{everything}",
-      "Key": "AuthDownroute",
-      "DangerousAcceptAnyServerCertificateValidator": true
+      "Key": "AuthDownroute"
     }
   ],
   "GlobalConfiguration": {
