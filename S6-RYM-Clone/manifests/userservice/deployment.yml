@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: s6rymclone
-          image: rymcloneregistry.azurecr.io/userservice
+          image: s6rymcloneregistry.azurecr.io/userservice
           ports:
           - containerPort: 80

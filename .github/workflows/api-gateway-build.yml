@@ -19,10 +19,10 @@ on:
 env:
   PROJECT_PATH: 'ApiGateway/ApiGateway/ApiGateway.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  REGISTRY_NAME: 'rymcloneregistry'
-  CLUSTER_NAME: 's6rymcluster'
-  CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
-  NAMESPACE: 's6rymcloneservices'
+  REGISTRY_NAME: 's6rymcloneregistry'
+  CLUSTER_NAME: 's6rymclonecluster'
+  CLUSTER_RESOURCE_GROUP: 's6rymclone'
+  NAMESPACE: 's6rymclone'
   SECRET: 's6rymclonegeheimpje'
   APP_NAME: 'gateway'
 
@@ -57,8 +57,8 @@ jobs:
     # Container build and push to a Azure Container Registry (ACR)
     #CHANGE {GATEWAY} PER SERVICE
     - run: |
-        docker build . -t rymcloneregistry.azurecr.io/gateway:${{ github.sha }}
-        docker push rymcloneregistry.azurecr.io/gateway:${{ github.sha }}
+        docker build . -t s6rymcloneregistry.azurecr.io/gateway:${{ github.sha }}
+        docker push s6rymcloneregistry.azurecr.io/gateway:${{ github.sha }}
       working-directory: ./ApiGateway
       
     - uses: azure/aks-set-context@v1
