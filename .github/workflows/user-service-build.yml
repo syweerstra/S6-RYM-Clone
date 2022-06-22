@@ -20,10 +20,10 @@ env:
   PROJECT_PATH: 'UserService/UserService.csproj'
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  REGISTRY_NAME: 'rymcloneregistry'
-  CLUSTER_NAME: 's6rymcluster'
-  CLUSTER_RESOURCE_GROUP: 's6-rym-clone'
-  NAMESPACE: 's6rymcloneservices'
+  REGISTRY_NAME: 's6rymcloneregistry'
+  CLUSTER_NAME: 's6rymclonecluster'
+  CLUSTER_RESOURCE_GROUP: 's6rymclone'
+  NAMESPACE: 's6rymclone'
   SECRET: 's6rymclonegeheimpje'
   APP_NAME: 'userservice'
 
