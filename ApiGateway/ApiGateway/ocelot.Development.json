@@ -32,7 +32,7 @@
           "Port": 7100
         }
       ],
-      "UpstreamPathTemplate": "/api/user/test",
+      "UpstreamPathTemplate": "/api/test",
       "Key": "UserDownroute"
     },
 

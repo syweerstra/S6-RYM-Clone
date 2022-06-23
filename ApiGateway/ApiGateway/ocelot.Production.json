@@ -20,15 +20,15 @@
     },
 
     {
-      "DownstreamPathTemplate": "/test}",
+      "DownstreamPathTemplate": "/test",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7100
+          "Host": "userservice",
+          "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/user/test}",
+      "UpstreamPathTemplate": "/api/test",
       "Key": "UserDownroute"
     },
 
