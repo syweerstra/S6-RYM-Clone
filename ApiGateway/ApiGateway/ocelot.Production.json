@@ -3,7 +3,7 @@
     //UserService
     {
       "DownstreamPathTemplate": "/user/{everything}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
