@@ -15,7 +15,5 @@ spec:
       containers:
         - name: s6rymclone
           image: s6rymcloneregistry.azurecr.io/gateway
-          ports:
-          - containerPort: 5001
       imagePullSecrets:
         - name: s6rymclonegeheimpje
