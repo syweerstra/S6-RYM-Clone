@@ -28,6 +28,18 @@
           "Port": 80
         }
       ],
+      "UpstreamPathTemplate": "/",
+      "Key": "UserDownroute"
+    },
+    {
+      "DownstreamPathTemplate": "/test",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
       "UpstreamPathTemplate": "/api/test",
       "Key": "UserDownroute"
     },
