@@ -88,7 +88,7 @@ namespace ApiGateway
 
             await app.UseOcelot();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
