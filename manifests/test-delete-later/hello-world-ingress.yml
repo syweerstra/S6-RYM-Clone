@@ -30,14 +30,7 @@ spec:
             name: aks-helloworld-two
             port:
               number: 80
-      - path: /user/syweer(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: userservice
-            port:
-              number: 443
-      - path: /api/user/syweer(/|$)(.*)
+      - path: /api/user/syweer
         pathType: Prefix
         backend:
           service:
