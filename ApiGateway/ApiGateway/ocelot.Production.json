@@ -3,7 +3,7 @@
     //UserService
     {
       "DownstreamPathTemplate": "/user/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
@@ -21,7 +21,7 @@
 
     {
       "DownstreamPathTemplate": "/test",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
@@ -33,7 +33,7 @@
     },
     {
       "DownstreamPathTemplate": "/test",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
@@ -46,7 +46,7 @@
 
     {
       "DownstreamPathTemplate": "/user/rate",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "userservice",
@@ -73,7 +73,7 @@
     //MusicService
     {
       "DownstreamPathTemplate": "/music/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "musicservice",
@@ -87,7 +87,7 @@
     //ArtistService
     {
       "DownstreamPathTemplate": "/artist/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "artistservice",
@@ -101,7 +101,7 @@
     //AuthService
     {
       "DownstreamPathTemplate": "/auth/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "authservice",
@@ -113,6 +113,6 @@
     }
   ],
   "GlobalConfiguration": {
-      "BaseUrl": "https://localhost:5000"
+      "BaseUrl": "http://localhost:5001"
   }
 }
