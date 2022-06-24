@@ -12,6 +12,17 @@
       ],
       "UpstreamPathTemplate": "/api/user/{everything}",
       "Key": "UserDownroute",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      },
+      "AddQueriesToRequest": {
+        "UserID": "Claims[userId] > value[0]"
+      },
+      "AddHeadersToRequest": {
+        "UserID": "Claims[userId] > value[0]",
+        "Username": "Claims[Username] > value[0]"
+      },
       "Priority": 0
       //"AddHeadersToRequest": {
       //  "Username": "Claims[Username] > value[0]"

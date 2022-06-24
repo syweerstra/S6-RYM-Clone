@@ -16,13 +16,45 @@
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
       },
-      "Priority": 0,
+      "AddQueriesToRequest": {
+        "UserID": "Claims[userId] > value[0]"
+      },
       "AddHeadersToRequest": {
         "UserID": "Claims[userId] > value[0]",
         "Username": "Claims[Username] > value[0]"
-      }
+      },
+      "Priority": 0
+      //"AddHeadersToRequest": {
+      //  "Username": "Claims[Username] > value[0]"
+      //}
       // "UpstreamHttpMethod": [ "Get" ]
     },
+
+    {
+      "DownstreamPathTemplate": "/test",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7100
+        }
+      ],
+      "UpstreamPathTemplate": "/",
+      "Key": "UserDownroute"
+    },
+    {
+      "DownstreamPathTemplate": "/test",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7100
+        }
+      ],
+      "UpstreamPathTemplate": "/api/test",
+      "Key": "UserDownroute"
+    },
+
     {
       "DownstreamPathTemplate": "/user/rate",
       "DownstreamScheme": "https",
@@ -39,6 +71,9 @@
         "AllowedScopes": []
       },
       "UpstreamHttpMethod": [ "Post" ],
+      "AddQueriesToRequest": {
+        "UserID": "Claims[userId] > value[0]"
+      },
       "AddHeadersToRequest": {
         "UserID": "Claims[userId] > value[0]",
         "Username": "Claims[Username] > value[0]"
@@ -89,6 +124,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7000"
+      "BaseUrl": "https://localhost:5001"
   }
 }
