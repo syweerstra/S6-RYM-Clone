@@ -1,4 +1,5 @@
-﻿using MusicService.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicService.Models;
 
 namespace MusicService.Repositories
 {
@@ -10,12 +11,17 @@ namespace MusicService.Repositories
         {
             this.context = context;
         }
+        public List<Album> GetAllAlbums()
+        {
+            return context.Albums.ToList();
+        }
+
 
         public bool Add(Album musicRelease)
         {
             try
             {
-                context.MusicRelease.Add(musicRelease);
+                context.Albums.Add(musicRelease);
                 return true;
             }
             catch (Exception e)
@@ -26,24 +32,49 @@ namespace MusicService.Repositories
             }
         }
 
-        public Album AddRating(Guid userID, int albumID, int rating)
+        public Album AddRating(string userID, int albumID, int rating)
         {
-            throw new NotImplementedException();
+            var album = context.Albums.Include("Artist").Include("Ratings").FirstOrDefault(a => a.ID == albumID);
+            album.Ratings.Add(new Rating() { UserID = userID, RatingOutOfTen = rating, AlbumID = albumID });
+            album.AverageRating = RatingCalculations.CalculateAverage(album.Ratings.Select(r => r.RatingOutOfTen).ToList());
+            album.AmountOfRatings++;
+
+            context.Albums.Update(album);
+            context.SaveChanges();
+
+            return album;
         }
 
-        public bool DeleteAllRatings(List<int> albumIDs, Guid userID)
+        public bool DeleteAllRatings(List<int> albumIDs, string userID)
         {
-            throw new NotImplementedException();
+            var albums = context.Albums.Include("Artist").Include("Ratings")
+                .Where(a => albumIDs.Contains(a.ID)).ToList();
+
+            foreach (var album in albums)
+            {
+                album.Ratings.Remove(album.Ratings.FirstOrDefault(r => r.UserID == userID));
+                album.AmountOfRatings--;
+                album.AverageRating = RatingCalculations.CalculateAverage(album.Ratings.Select(r => r.RatingOutOfTen).ToList());
+            }
+
+            context.Albums.UpdateRange(albums);
+            context.SaveChanges();
+            return true;
         }
 
-        public bool DeleteRating(int albumID, Guid userID)
+        public bool DeleteRating(int albumID, string userID)
         {
             throw new NotImplementedException();
         }
 
         public Album GetById(int id)
         {
-           return context.MusicRelease.Find(id);
+            return context.Albums.Include("Artist").Include("Ratings").FirstOrDefault(a => a.ID == id);
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
         }
     }
 }

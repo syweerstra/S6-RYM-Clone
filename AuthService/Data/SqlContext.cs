@@ -11,7 +11,8 @@ namespace AuthService.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connString = "Server=s6rymclone-mysql.mysql.database.azure.com;Database=authservice;Uid=syweermysql;Pwd=Test123!;";
+                //Shouldn't be here of course
+                string connString = "Server=s6rymclone-auth-mysql.mysql.database.azure.com;Database=authservice;Uid=syweermysql;Pwd=Test123!;";
                 optionsBuilder.UseMySql(connString, ServerVersion.AutoDetect(connString));
             }
             base.OnConfiguring(optionsBuilder);

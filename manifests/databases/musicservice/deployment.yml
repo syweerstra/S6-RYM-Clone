@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: rymcloneregistry.azurecr.io/databases/postgres
+          image: s6rymcloneregistry.azurecr.io/databases/postgres
           imagePullPolicy: "IfNotPresent"
           env:
             - name: "POSTGRES_USER"

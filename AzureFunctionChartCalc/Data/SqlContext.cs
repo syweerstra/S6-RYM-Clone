@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MusicService.Models;
+﻿using AzureFunctionChartCalc.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace MusicService
+namespace AzureFunctionChartCalc
 {
     public class SqlContext : DbContext
     {
         public DbSet<Album> Albums { get; set; }
         public DbSet<Artist> Artist { get; set; }
         public DbSet<Rating> Ratings { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -20,5 +19,9 @@ namespace MusicService
             base.OnConfiguring(optionsBuilder);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

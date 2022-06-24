@@ -16,13 +16,10 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddMessageProducing("MusicService");
 
-builder.Services.AddDbContext<SqlContext>(options =>
-{
-    options.UseMySQL(builder.Configuration.GetConnectionString("ProductionDatabaseConnection"));
-});
 
-builder.Services.AddTransient<IAlbumRepository, MockAlbumRepository>();
+builder.Services.AddTransient<IAlbumRepository, AlbumRepository>();
 builder.Services.AddTransient<IImageStorage, AzureBlobStorage>();
+builder.Services.AddTransient<SqlContext>();
 
 builder.Services.AddCors(options =>
 {
@@ -43,13 +40,13 @@ builder.Services.AddMassTransit(config =>
 
     config.UsingRabbitMq((context, config) =>
     {
-        config.Host("amqp://guest:guest@localhost:5672");
+        //config.Host("amqp://guest:guest@localhost:5672");
 
-        //config.Host("rabbitmq-service", 5672, "/", h =>
-        //{
-        //    h.Username("guest");
-        //    h.Password("guest");
-        //});
+        config.Host("rabbitmq-service", 5672, "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
 
         config.ReceiveEndpoint("rating-queue", c =>
         {

@@ -24,30 +24,6 @@
       // "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/test",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7100
-        }
-      ],
-      "UpstreamPathTemplate": "/api/test",
-      "Key": "UserDownroute"
-    },
-    {
-      "DownstreamPathTemplate": "/test",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7100
-        }
-      ],
-      "UpstreamPathTemplate": "/",
-      "Key": "UserDownroute"
-    },
-    {
       "DownstreamPathTemplate": "/user/rate",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

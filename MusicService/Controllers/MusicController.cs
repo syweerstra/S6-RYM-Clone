@@ -25,6 +25,7 @@ namespace MusicService.Controllers
         }
 
         [HttpGet("{id}")]
+        //Should be DTO 
         public Album GetById(int id)
         {
             return repository.GetById(id);
@@ -62,7 +63,6 @@ namespace MusicService.Controllers
                 AlbumCoverImageURL = imageUrl,
                 ReleaseDate = dto.ReleaseDate,
                 Types = dto.Types,
-                Songs = songs,
                 Descriptors = dto.Descriptors,
                 Languages = dto.Languages
             };

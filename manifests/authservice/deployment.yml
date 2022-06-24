@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: authservice
-          image: rymcloneregistry.azurecr.io/authservice
+          image: s6rymcloneregistry.azurecr.io/authservice
           ports:
           - containerPort: 80
       imagePullSecrets:

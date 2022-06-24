@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: artistservice
-          image: rymcloneregistry.azurecr.io/artistservice
+          image: s6rymcloneregistry.azurecr.io/artistservice
           ports:
           - containerPort: 80
       imagePullSecrets:

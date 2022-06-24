@@ -14,7 +14,7 @@ namespace MusicService
         }
         public Task Consume(ConsumeContext<UserDeletedMessage> context)
         {
-            repo.DeleteAllRatings(context.Message.AlbumsRatedIDs, context.Message.UserID);
+            repo.DeleteAllRatings(context.Message.AlbumsRatedIDs, context.Message.UserID.ToString());
             return Task.CompletedTask;
         }
     }
